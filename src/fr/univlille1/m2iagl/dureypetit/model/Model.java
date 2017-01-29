@@ -1,16 +1,14 @@
 package fr.univlille1.m2iagl.dureypetit.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Model {
 
 	
+	public static Map<String, Model> models;
 	public static Model currentModel;
-	
-	public static Model masterBranchModel = new Model();
-	public static Model pullRequestBranchModel = new Model();
 	
 	private List<ClassModel> classModels;
 	
