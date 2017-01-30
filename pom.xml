@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.univlille1.m2iagl.dureypetit</groupId>
-	<artifactId>FancyGitDif</artifactId>
+	<artifactId>fancyGitDiff</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>FancyGitDif</name>
+	<name>fancyGitDiff</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
