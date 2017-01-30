@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.univlille1.m2iagl.dureypetit</groupId>
-	<artifactId>FancyGitDif</artifactId>
+	<artifactId>FancyGitDiff</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>FancyGitDif</name>
+	<name>FancyGitDiff</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -40,6 +40,12 @@
 			<version>1.4.2</version>
 			<scope>system</scope>
 			<systemPath>${java.home}/../lib/tools.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-core</artifactId>
+			<version>1.0.1</version>
 		</dependency>
 
 	</dependencies>

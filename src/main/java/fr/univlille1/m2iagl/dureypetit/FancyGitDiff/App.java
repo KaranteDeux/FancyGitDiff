@@ -1,4 +1,4 @@
-package fr.univlille1.m2iagl.dureypetit.FancyGitDif;
+package fr.univlille1.m2iagl.dureypetit.FancyGitDiff;
 
 /**
  * Hello world!
