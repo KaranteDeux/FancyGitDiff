@@ -1,10 +1,11 @@
 package fr.univlille1.m2iagl.dureypetit.graphics;
-
+/*
+<<<<<<< HEAD
+*/
 import javax.swing.JFrame;
 
 import org.jgrapht.ListenableGraph;
 import org.jgrapht.ext.JGraphXAdapter;
-import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.ListenableDirectedWeightedGraph;
 

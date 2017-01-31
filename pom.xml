@@ -3,11 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.univlille1.m2iagl.dureypetit</groupId>
-	<artifactId>FancyGitDiff</artifactId>
+
+	<artifactId>fancyGitDiff</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>FancyGitDiff</name>
+	<name>fancyGitDiff</name>
+
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -53,6 +55,7 @@
 			<artifactId>jgraphx</artifactId>
 			<version>3.4.1.3</version>
 		</dependency>
+
 
 	</dependencies>
 </project>
