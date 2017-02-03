@@ -9,8 +9,6 @@ public class ClassModel extends AbstractElementModel{
 	
 	private List<FieldModel> fieldsModel;
 	
-	private List<ConstructorModel> constructorsModel;
-	
 	private List<MethodModel> methodsModel;
 	
 	private String commentText;
@@ -20,18 +18,14 @@ public class ClassModel extends AbstractElementModel{
 		this.commentText = commentText;
 		
 		fieldsModel = new ArrayList<>();
-		constructorsModel = new ArrayList<>();
 		methodsModel = new ArrayList<>();
 		
 	}
 	
-	public void addFieldModel(FieldModel fieldModel){
-		fieldsModel.add(fieldModel);
+	public void addAllFieldsModel(List<FieldModel> fieldsModel){
+		fieldsModel.addAll(fieldsModel);
 	}
 	
-	public void addConstructorModel(ConstructorModel constructorModel){
-		constructorsModel.add(constructorModel);
-	}
 	
 	public void addMethodModel(MethodModel methodModel){
 		methodsModel.add(methodModel);
@@ -41,7 +35,6 @@ public class ClassModel extends AbstractElementModel{
 	@Override
 	public String toString() {
 		return "ClassModel [name=" + name + ", fieldsModel=" + fieldsModel
-				+ ", constructorsModel=" + constructorsModel
 				+ ", methodsModel=" + methodsModel + ", commentText="
 				+ commentText + "]";
 	}
@@ -60,10 +53,6 @@ public class ClassModel extends AbstractElementModel{
 		return fieldsModel;
 	}
 	
-	public List<ConstructorModel> getConstructors(){
-		return constructorsModel;
-	}
-	
 	public List<MethodModel> getMethods(){
 		return methodsModel;
 	}
@@ -74,10 +63,6 @@ public class ClassModel extends AbstractElementModel{
 		int result = 1;
 		result = prime * result
 				+ ((commentText == null) ? 0 : commentText.hashCode());
-		result = prime
-				* result
-				+ ((constructorsModel == null) ? 0 : constructorsModel
-						.hashCode());
 		result = prime * result
 				+ ((fieldsModel == null) ? 0 : fieldsModel.hashCode());
 		result = prime * result
@@ -99,11 +84,6 @@ public class ClassModel extends AbstractElementModel{
 			if (other.commentText != null)
 				return false;
 		} else if (!commentText.equals(other.commentText))
-			return false;
-		if (constructorsModel == null) {
-			if (other.constructorsModel != null)
-				return false;
-		} else if (!constructorsModel.equals(other.constructorsModel))
 			return false;
 		if (fieldsModel == null) {
 			if (other.fieldsModel != null)
