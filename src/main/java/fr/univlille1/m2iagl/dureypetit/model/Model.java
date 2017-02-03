@@ -8,7 +8,6 @@ public class Model {
 
 	
 	public static Map<String, Model> models;
-	public static Model currentModel;
 	
 	private List<ClassModel> classModels;
 	

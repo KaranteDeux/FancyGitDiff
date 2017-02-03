@@ -1,101 +1,60 @@
 package fr.univlille1.m2iagl.dureypetit.graphics;
-
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-
-import javax.swing.BorderFactory;
+/*
+<<<<<<< HEAD
+*/
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 
-import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.ListenableGraph;
+import org.jgrapht.ext.JGraphXAdapter;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.ListenableDirectedWeightedGraph;
 
-public class Frame {
-	
+import com.mxgraph.layout.mxCircleLayout;
+import com.mxgraph.layout.mxIGraphLayout;
+import com.mxgraph.swing.mxGraphComponent;
+
+public class Frame extends JFrame{
+
 	public Frame(){
+		createAndShowGui();
+	}
+	private void createAndShowGui() {
+		JFrame frame = new JFrame("DemoGraph");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Construct Model and Graph
-        GraphModel model = new DefaultGraphModel();
-        JGraph graph = new JGraph(model);
-        // Control-drag should clone selection
-        graph.setCloneable(true);
+		ListenableGraph<String, DefaultWeightedEdge> g = buildGraph();
+		JGraphXAdapter<String, DefaultWeightedEdge> graphAdapter = new JGraphXAdapter<String, DefaultWeightedEdge>(g);
 
-        // Enable edit without final RETURN keystroke
-        graph.setInvokesStopCellEditing(true);
+		mxIGraphLayout layout = new mxCircleLayout(graphAdapter);
+		layout.execute(graphAdapter.getDefaultParent());
 
-        // When over a cell, jump to its default port (we only have one, anyway)
-        graph.setJumpToDefaultPort(true);
+		frame.add(new mxGraphComponent(graphAdapter));
 
-        // Insert all three cells in one call, so we need an array to store them
-        DefaultGraphCell[] cells = new DefaultGraphCell[3];
+		frame.pack();
+		frame.setLocationByPlatform(true);
+		frame.setVisible(true);
+	}
 
-        // Create Hello Vertex
-        cells[0] = createVertex("Hello", 20, 20, 40, 20, null, false );
+	public ListenableGraph<String, DefaultWeightedEdge> buildGraph() {
+		ListenableDirectedWeightedGraph<String, DefaultWeightedEdge> g = 
+				new ListenableDirectedWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
 
-        // Create World Vertex
-        cells[1] = createVertex("World", 140, 140, 40, 20,
-                Color.ORANGE, true);
+		String x1 = "x1";
+		String x2 = "x2";
+		String x3 = "x3";
 
-        // Create Edge
-        DefaultEdge edge = new DefaultEdge("foo");
-        // Fetch the ports from the new vertices, and connect them with the edge
-        edge.setSource(cells[0].getChildAt(0));
-        edge.setTarget(cells[0].getChildAt(0));
-        cells[2] = edge;
+		g.addVertex(x1);
+		g.addVertex(x2);
+		g.addVertex(x3);
 
-        // Create Edge
-        DefaultEdge edge1 = new DefaultEdge();
-        // Fetch the ports from the new vertices, and connect them with the edge
-//        cells[0].addPort();
-//        cells[1].addPort();
-//        edge1.setSource(cells[1]);
-//        edge1.setTarget(cells[0]);
-//        cells[3] = edge1;
+		DefaultWeightedEdge e = g.addEdge(x1, x2);
+		g.setEdgeWeight(e, 1);
+		e = g.addEdge(x2, x3);
+		g.setEdgeWeight(e, 2);
 
-        // Set Arrow Style for edge
-        int arrow = GraphConstants.ARROW_CLASSIC;
-        GraphConstants.setLineEnd(edge.getAttributes(), arrow);
-        GraphConstants.setEndFill(edge.getAttributes(), true);
+		e = g.addEdge(x3, x1);
+		g.setEdgeWeight(e, 3);
 
-        // Insert the cells via the cache, so they get selected
-        graph.getGraphLayoutCache().insert(cells);
-
-        // Show in Frame
-        JFrame frame = new JFrame();
-        frame.getContentPane().add(new JScrollPane(graph));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    public DefaultGraphCell createVertex(String name, double x,
-            double y, double w, double h, Color bg, boolean raised) {
-
-        // Create vertex with the given name
-        DefaultGraphCell cell = new DefaultGraphCell(name);
-
-        // Set bounds
-        GraphConstants.setBounds(cell.getAttributes(),
-                new Rectangle2D.Double(x, y, w, h));
-
-        // Set fill color
-        if (bg != null) {
-            GraphConstants.setGradientColor(cell.getAttributes(), bg);
-            GraphConstants.setOpaque(cell.getAttributes(), true);
-        }
-
-        // Set raised border
-        if (raised) {
-            GraphConstants.setBorder(cell.getAttributes(),
-                    BorderFactory.createRaisedBevelBorder());
-        } else // Set black border
-        {
-            GraphConstants.setBorderColor(cell.getAttributes(),
-                    Color.black);
-        }
-        // Add a Floating Port
-        cell.addPort();
-
-        return cell;
-    }
-
+		return g;
+	}
 }
