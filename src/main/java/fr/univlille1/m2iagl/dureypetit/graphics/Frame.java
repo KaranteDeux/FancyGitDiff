@@ -1,6 +1,9 @@
 package fr.univlille1.m2iagl.dureypetit.graphics;
 
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,11 +14,11 @@ import java.util.Properties;
 */
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 
-import org.jgraph.JGraph;
 import org.jgrapht.ListenableGraph;
 import org.jgrapht.ext.JGraphXAdapter;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -40,7 +43,7 @@ public class Frame extends JFrame {
 
 		Properties p = new Properties();
 		try {
-			p.load(new FileReader("./src/config.cfg"));
+			p.load(new FileReader("./config.cfg"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,9 +56,18 @@ public class Frame extends JFrame {
 		// Liste des commits
 		JList<Commit> list = new JList(gitRepo.getCommitsList().toArray());
 
-		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(-1);
+
+		MouseListener mouseListener = new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+
+				Commit selectedItem = (Commit) list.getSelectedValue();
+				System.out.println(selectedItem.toString());
+			}
+		};
+		list.addMouseListener(mouseListener);
 
 		// Graphe
 		ListenableGraph<String, DefaultWeightedEdge> g = buildGraph();
@@ -63,20 +75,24 @@ public class Frame extends JFrame {
 
 		mxIGraphLayout layout = new mxCircleLayout(graphAdapter);
 		layout.execute(graphAdapter.getDefaultParent());
-		
-//		JGraph myGraph = new JGraph();
-//		JScrollPane left = new JScrollPane(myGraph);
-		
+
+		// JGraph myGraph = new JGraph();
+		// JScrollPane left = new JScrollPane(myGraph);
+
 		JScrollPane left = new mxGraphComponent(graphAdapter);
 		JScrollPane right = new JScrollPane(list);
 		left.setPreferredSize(new Dimension(250, 80));
-		right.setPreferredSize(new Dimension(250, 80));
+		right.setPreferredSize(new Dimension(10, 80));
+		
+
+
 
 		JSplitPane topSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
 		topSplitPane.setOneTouchExpandable(true);
-		topSplitPane.setDividerLocation(150);
+		topSplitPane.setDividerLocation(1080);
 
 		frame.add(topSplitPane);
+		frame.setPreferredSize(new Dimension(1920, 1080));
 		frame.pack();
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
