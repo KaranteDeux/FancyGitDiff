@@ -71,5 +71,9 @@ public class FieldModel extends AbstractElementModel{
 		return true;
 	}
 	
+	public String getStringToPrint(){
+		return name;
+	}
+	
 	
 }

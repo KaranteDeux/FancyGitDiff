@@ -3,7 +3,7 @@ package fr.univlille1.m2iagl.dureypetit.model;
 public class PackageModel extends AbstractElementModel{
 	
 	
-	String name;
+	private String name;
 	
 	public PackageModel(String name){
 		this.name = name;
@@ -17,6 +17,10 @@ public class PackageModel extends AbstractElementModel{
 	@Override
 	public String getCommentText() {
 		return "";
+	}
+	
+	public String getStringToPrint(){
+		return name;
 	}
 	
 	

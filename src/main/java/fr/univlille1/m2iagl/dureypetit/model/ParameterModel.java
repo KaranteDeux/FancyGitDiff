@@ -2,10 +2,10 @@ package fr.univlille1.m2iagl.dureypetit.model;
 
 public class ParameterModel extends AbstractElementModel{
 	
-	String name;
-	String type;
+	private String name;
+	private String type;
 	
-	String commentText;
+	private String commentText;
 	
 	public ParameterModel(String type, String name, String commentText){
 		this.name = name;
@@ -72,6 +72,10 @@ public class ParameterModel extends AbstractElementModel{
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
+	}
+	
+	public String getStringToPrint(){
+		return name;
 	}
 	
 	

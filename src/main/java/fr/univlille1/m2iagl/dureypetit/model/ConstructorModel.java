@@ -74,6 +74,10 @@ public class ConstructorModel extends AbstractElementModel{
 		return true;
 	}
 	
+	public String getStringToPrint(){
+		return constructorName;
+	}
+	
 	
 
 }

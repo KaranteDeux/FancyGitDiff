@@ -137,6 +137,10 @@ public class MethodModel extends AbstractElementModel{
 		return true;
 	}
 	
+	public String getStringToPrint(){
+		return name;
+	}
+	
 	
 
 }

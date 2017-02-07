@@ -63,13 +63,9 @@ public class Frame extends JFrame {
 
 		mxIGraphLayout layout = new mxCircleLayout(graphAdapter);
 		layout.execute(graphAdapter.getDefaultParent());
-
 		
-		
-		JGraph myGraph = new JGraph();
+//		JGraph myGraph = new JGraph();
 //		JScrollPane left = new JScrollPane(myGraph);
-
-		
 		
 		JScrollPane left = new mxGraphComponent(graphAdapter);
 		JScrollPane right = new JScrollPane(list);

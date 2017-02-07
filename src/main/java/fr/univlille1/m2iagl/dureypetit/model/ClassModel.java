@@ -103,6 +103,10 @@ public class ClassModel extends AbstractElementModel{
 		return true;
 	}
 	
+	public String getStringToPrint(){
+		return name;
+	}
+	
 	
 
 }

@@ -1,6 +1,8 @@
 package fr.univlille1.m2iagl.dureypetit.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +44,9 @@ public class Commit {
 
 	@Override
 	public String toString() {
-		return "Commit [id=" + id + ", message=" + message + ", author=" + author + ", date=" + date + ", elements="+ elementsChanged + "]";
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("EEE d MMM yyyy");
+		return author + " - \t" + format.format(date) + " : \t" + message;
 	}
 
 
