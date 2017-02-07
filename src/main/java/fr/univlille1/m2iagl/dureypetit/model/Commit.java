@@ -38,6 +38,11 @@ public class Commit {
 		return elementsChanged.keySet();
 	}
 	
+	public List<ClassModel> get(String filename){
+		return elementsChanged.get(filename);
+	}
+	
+	
 	public void addClassModel(String fileChanged, ClassModel model){
 		elementsChanged.get(fileChanged).add(model);
 	}

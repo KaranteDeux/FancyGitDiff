@@ -15,11 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 
-import org.jgraph.JGraph;
 import org.jgrapht.ListenableGraph;
 import org.jgrapht.ext.JGraphXAdapter;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.ListenableDirectedWeightedGraph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.ListenableDirectedGraph;
 
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.layout.mxIGraphLayout;
@@ -27,6 +26,7 @@ import com.mxgraph.swing.mxGraphComponent;
 
 import fr.univlille1.m2iagl.dureypetit.git.GitRepository;
 import fr.univlille1.m2iagl.dureypetit.model.Commit;
+import fr.univlille1.m2iagl.dureypetit.tree.TreeBuilder;
 
 public class Frame extends JFrame {
 
@@ -58,8 +58,8 @@ public class Frame extends JFrame {
 		list.setVisibleRowCount(-1);
 
 		// Graphe
-		ListenableGraph<String, DefaultWeightedEdge> g = buildGraph();
-		JGraphXAdapter<String, DefaultWeightedEdge> graphAdapter = new JGraphXAdapter<String, DefaultWeightedEdge>(g);
+		ListenableGraph<String, DefaultEdge> g = null;
+		JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<String, DefaultEdge>(g);
 
 		mxIGraphLayout layout = new mxCircleLayout(graphAdapter);
 		layout.execute(graphAdapter.getDefaultParent());
@@ -86,12 +86,11 @@ public class Frame extends JFrame {
 		// frame.pack();
 		// frame.setLocationByPlatform(true);
 		// frame.setVisible(true);
-
 	}
 
-	public ListenableGraph<String, DefaultWeightedEdge> buildGraph() {
-		ListenableDirectedWeightedGraph<String, DefaultWeightedEdge> g = new ListenableDirectedWeightedGraph<String, DefaultWeightedEdge>(
-				DefaultWeightedEdge.class);
+	public ListenableGraph<String, DefaultEdge> buildGraph() {
+		ListenableDirectedGraph<String, DefaultEdge> g = new ListenableDirectedGraph<String, DefaultEdge>(
+				DefaultEdge.class);
 
 		String x1 = "x1reareraerzeazeazeerze";
 		String x2 = "x2";

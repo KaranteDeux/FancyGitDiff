@@ -20,7 +20,6 @@ public class Parser {
 
 		ClassModel classModel = new ClassModel(classOrInterfaceDeclaration.getNameAsString(), classOrInterfaceDeclaration.getComment().getContent());
 
-
 		List<FieldDeclaration> fieldsDeclaration = classOrInterfaceDeclaration.getFields();
 
 		for(FieldDeclaration fieldDeclaration : fieldsDeclaration){

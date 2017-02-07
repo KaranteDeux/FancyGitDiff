@@ -88,9 +88,8 @@ public class GitRepository {
 
 					// prints the resulting compilation unit to default system output
 					new ClassVisitor().visit(cu, null);
-					System.out.println("i : " + i);
 					i++;
-					System.out.println(GitRepository.classModel);
+					commit.addClassModel(fileChanged, GitRepository.classModel);
 
 				} catch(Exception e){
 
