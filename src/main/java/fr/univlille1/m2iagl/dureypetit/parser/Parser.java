@@ -18,7 +18,11 @@ public class Parser {
 
 	public static ClassModel parseClass(ClassOrInterfaceDeclaration classOrInterfaceDeclaration){
 
-		ClassModel classModel = new ClassModel(classOrInterfaceDeclaration.getNameAsString(), classOrInterfaceDeclaration.getComment().getContent());
+		String comment = "";
+		if(classOrInterfaceDeclaration.getComment() != null)
+			comment = classOrInterfaceDeclaration.getComment().getContent();
+		
+		ClassModel classModel = new ClassModel(classOrInterfaceDeclaration.getNameAsString(), comment);
 
 		List<FieldDeclaration> fieldsDeclaration = classOrInterfaceDeclaration.getFields();
 
@@ -42,7 +46,13 @@ public class Parser {
 	public static List<FieldModel> parseField(FieldDeclaration fieldDeclaration){
 		List<FieldModel> fieldsModel = new ArrayList<FieldModel>();
 		for(VariableDeclarator variableDeclarator : fieldDeclaration.getVariables()){
-			fieldsModel.add(new FieldModel(variableDeclarator.getNameAsString(), variableDeclarator.getType().toString(), variableDeclarator.getComment().getContent()));
+			
+			String comment = "";
+			if(variableDeclarator.getComment() != null)
+				comment = variableDeclarator.getComment().getContent();
+			
+			
+			fieldsModel.add(new FieldModel(variableDeclarator.getNameAsString(), variableDeclarator.getType().toString(), comment));
 		}
 
 		return fieldsModel;
@@ -50,7 +60,11 @@ public class Parser {
 
 	public static MethodModel parseMethod(MethodDeclaration methodDeclaration){
 
-		MethodModel methodModel = new MethodModel(methodDeclaration.getModifiers().toString(), methodDeclaration.getType().toString(), methodDeclaration.getNameAsString(), methodDeclaration.getComment().toString());
+		String comment = "";
+		if(methodDeclaration.getComment() != null)
+			comment = methodDeclaration.getComment().getContent();
+		
+		MethodModel methodModel = new MethodModel(methodDeclaration.getModifiers().toString(), methodDeclaration.getType().toString(), methodDeclaration.getNameAsString(), comment);
 
 		for(Parameter parameter : methodDeclaration.getParameters()){
 			methodModel.addParameterModel(parseParameter(parameter));

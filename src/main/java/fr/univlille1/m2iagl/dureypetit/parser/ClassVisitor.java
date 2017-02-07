@@ -8,6 +8,7 @@ import fr.univlille1.m2iagl.dureypetit.git.GitRepository;
 public class ClassVisitor extends VoidVisitorAdapter<Void> {
     @Override
     public void visit(ClassOrInterfaceDeclaration classOrInterfaceDeclaration, Void arg) {
+    	
     	GitRepository.classModel = Parser.parseClass(classOrInterfaceDeclaration);
     }
 }

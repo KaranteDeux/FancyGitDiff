@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.jgrapht.ListenableGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.ListenableDirectedGraph;
 
 import fr.univlille1.m2iagl.dureypetit.model.ClassModel;
 import fr.univlille1.m2iagl.dureypetit.model.Commit;
@@ -15,15 +14,17 @@ import fr.univlille1.m2iagl.dureypetit.model.MethodModel;
 public class TreeBuilder {
 	
 	private Commit commit;
+	private ListenableGraph<String, DefaultEdge> graph;
 	
-	public TreeBuilder(Commit commit){
+	public TreeBuilder(Commit commit, ListenableGraph<String, DefaultEdge> g){
 		this.commit = commit;
+		this.graph = g;
 	}
 	
 	public ListenableGraph<String, DefaultEdge> build(){
+		
 		Set<String> filenames = commit.getFilesChanged();
 		
-		ListenableGraph<String, DefaultEdge> graph = new ListenableDirectedGraph<>(DefaultEdge.class);
 		
 		for(String filename : filenames){
 			List<ClassModel> classModels = commit.get(filename);

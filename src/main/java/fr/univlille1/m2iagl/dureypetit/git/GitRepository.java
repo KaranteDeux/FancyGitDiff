@@ -32,9 +32,11 @@ public class GitRepository {
 
 	public static ClassModel classModel;
 
-	Repository repository;
-	String folderPath;
-
+	private Repository repository;
+	private String folderPath;
+	private List<Commit> commits;
+	
+	
 	public GitRepository(String folderPath){
 		this.folderPath = folderPath;
 
@@ -47,8 +49,12 @@ public class GitRepository {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public List<Commit> getCommitsList(){
+		return commits;
+	}
+
+	private List<Commit> constructCommitsList(){
 		Git git = new Git(repository);
 		Iterable<RevCommit> revCommits = null;
 
@@ -70,25 +76,23 @@ public class GitRepository {
 	}
 
 	public void constructModelForEachCommit(){
-		List<Commit> commits = getCommitsList();
+		commits = constructCommitsList();
 
-		int i=0;
 		for(Commit commit : commits){
 			for(String fileChanged : commit.getFilesChanged()){
 
 				try {
 					String contentFile = getContentFile(commit.getId(), fileChanged);
-					FileWriter file = new FileWriter("tmp/tmpFile.java");
+					FileWriter file = new FileWriter("/tmp/tmpFile.java");
 
 					file.write(contentFile);
 					file.close();
 
-					FileInputStream in = new FileInputStream("tmp/tmpFile.java");
+					FileInputStream in = new FileInputStream("/tmp/tmpFile.java");
 					CompilationUnit cu = JavaParser.parse(in);
-
+					
 					// prints the resulting compilation unit to default system output
 					new ClassVisitor().visit(cu, null);
-					i++;
 					commit.addClassModel(fileChanged, GitRepository.classModel);
 
 				} catch(Exception e){

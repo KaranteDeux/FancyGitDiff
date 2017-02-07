@@ -1,9 +1,6 @@
 package fr.univlille1.m2iagl.dureypetit.graphics;
 
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +11,6 @@ import java.util.Properties;
 */
 import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
@@ -30,11 +26,11 @@ import com.mxgraph.swing.mxGraphComponent;
 
 import fr.univlille1.m2iagl.dureypetit.git.GitRepository;
 import fr.univlille1.m2iagl.dureypetit.model.Commit;
-import fr.univlille1.m2iagl.dureypetit.tree.TreeBuilder;
 
-public class Frame extends JFrame {
+public class Frame {
 
 	public Frame() {
+		
 		createAndShowGui();
 	}
 
@@ -52,8 +48,10 @@ public class Frame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("Java folder : " + p.getProperty("JAVA_FOLDER"));
 		GitRepository gitRepo = new GitRepository(p.getProperty("JAVA_FOLDER"));
-
+		gitRepo.constructModelForEachCommit();
+		
 		// Liste des commits
 		JList<Commit> list = new JList(gitRepo.getCommitsList().toArray());
 
@@ -61,18 +59,14 @@ public class Frame extends JFrame {
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(-1);
 
-		MouseListener mouseListener = new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
+		ListenableGraph<String, DefaultEdge> g = new ListenableDirectedGraph<>(DefaultEdge.class);
+		JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<String, DefaultEdge>(g);
 
-				Commit selectedItem = (Commit) list.getSelectedValue();
-				System.out.println(selectedItem.toString());
-			}
-		};
+		
+		MouseListListener mouseListener = new MouseListListener(frame, list, g, graphAdapter);
 		list.addMouseListener(mouseListener);
 
 		// Graphe
-		ListenableGraph<String, DefaultEdge> g = null;
-		JGraphXAdapter<String, DefaultEdge> graphAdapter = new JGraphXAdapter<String, DefaultEdge>(g);
 
 		mxIGraphLayout layout = new mxCircleLayout(graphAdapter);
 		layout.execute(graphAdapter.getDefaultParent());
