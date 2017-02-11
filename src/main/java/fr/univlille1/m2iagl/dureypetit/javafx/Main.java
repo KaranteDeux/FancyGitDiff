@@ -1,62 +1,72 @@
 package fr.univlille1.m2iagl.dureypetit.javafx;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
+import fr.univlille1.m2iagl.dureypetit.git.GitRepository;
+import fr.univlille1.m2iagl.dureypetit.model.CommitModel;
+import fr.univlille1.m2iagl.dureypetit.model.ConfigConstants;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
     Graph graph = new Graph();
+    ListCommitView listCommitView;
+    
+    static GitRepository gitRepo;
 
     @Override
     public void start(Stage primaryStage) {
+    	
         BorderPane root = new BorderPane();
 
         graph = new Graph();
 
-        root.setCenter(graph.getScrollPane());
-
-        Scene scene = new Scene(root, 1024, 768);
+        Scene scene = new Scene(root, 1920, 1060);
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        
+        listCommitView = new ListCommitView(gitRepo, graph);
+        
+        StackPane leftPane = new StackPane(graph.getScrollPane());
+        StackPane rightPane = new StackPane(listCommitView);
+        SplitPane splitPane = new SplitPane();
+        splitPane.getItems().addAll(leftPane, rightPane);
+        splitPane.setDividerPositions(0.75);
 
-        primaryStage.setScene(scene);
+        //Constrain max size of left component:
+       // rightPane.maxWidthProperty().bind(splitPane.widthProperty().multiply(0.30));
+
+        primaryStage.setScene(new Scene(new BorderPane(splitPane), 1920, 1060));
+
         primaryStage.show();
 
-        addGraphComponents();
+       // addGraphComponents();
 
-        Layout layout = new RandomLayout(graph);
+        Layout layout = new OrderedLayout(graph);
         layout.execute();
-
     }
 
-    private void addGraphComponents() {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+    	
+    	Properties p = new Properties();
+		p.load(new FileReader(args[0]));
+		
+		ConfigConstants.SHOW_PARAMETERS = Boolean.parseBoolean(p.getProperty("SHOW_PARAMETERS"));
+		gitRepo = new GitRepository(p.getProperty("JAVA_FOLDER"));
 
-        Model model = graph.getModel();
-
-        graph.beginUpdate();
-
-        model.addCell("Cell A", CellType.RECTANGLE);
-        model.addCell("Cell B", CellType.RECTANGLE);
-        model.addCell("Cell C", CellType.RECTANGLE);
-        model.addCell("Cell D", CellType.TRIANGLE);
-        model.addCell("Cell E", CellType.TRIANGLE);
-        model.addCell("Cell F", CellType.RECTANGLE);
-        model.addCell("Cell G", CellType.RECTANGLE);
-
-        model.addEdge("Cell A", "Cell B");
-        model.addEdge("Cell A", "Cell C");
-        model.addEdge("Cell B", "Cell C");
-        model.addEdge("Cell C", "Cell D");
-        model.addEdge("Cell B", "Cell E");
-        model.addEdge("Cell D", "Cell F");
-        model.addEdge("Cell D", "Cell G");
-
-        graph.endUpdate();
-
-    }
-
-    public static void main(String[] args) {
+		
+		gitRepo.constructModelForEachCommit();
+		
+		
         launch(args);
     }
 }

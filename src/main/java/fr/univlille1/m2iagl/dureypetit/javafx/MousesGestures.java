@@ -15,12 +15,7 @@ public class MousesGestures {
     }
 
     public void makeDraggable( final Node node) {
-
-
-        node.setOnMousePressed(onMousePressedEventHandler);
-        node.setOnMouseDragged(onMouseDraggedEventHandler);
-        node.setOnMouseReleased(onMouseReleasedEventHandler);
-
+        node.setOnMouseEntered(onMouseEnteredEventHandler);
     }
 
     EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
@@ -28,21 +23,26 @@ public class MousesGestures {
         @Override
         public void handle(MouseEvent event) {
 
-            Node node = (Node) event.getSource();
-
-            double scale = graph.getScale();
-
-            dragContext.x = node.getBoundsInParent().getMinX() * scale - event.getScreenX();
-            dragContext.y = node.getBoundsInParent().getMinY()  * scale - event.getScreenY();
-
+            Cell cell = (Cell) event.getSource();
+            
+            ElementCell elementCell = null;
+            if(cell.isText()){
+            	TextCell textCell = (TextCell) cell;
+            	elementCell = textCell.getElementCell();
+            } else {
+            	elementCell = (ElementCell) cell;
+            }
+            
+            
+            
         }
     };
 
-    EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+    EventHandler<MouseEvent> onMouseEnteredEventHandler = new EventHandler<MouseEvent>() {
 
         @Override
         public void handle(MouseEvent event) {
-
+/*
             Node node = (Node) event.getSource();
 
             double offsetX = event.getScreenX() + dragContext.x;
@@ -55,7 +55,7 @@ public class MousesGestures {
             offsetY /= scale;
 
             node.relocate(offsetX, offsetY);
-
+*/
         }
     };
 

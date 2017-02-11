@@ -11,40 +11,49 @@ import java.util.Set;
 
 import org.eclipse.jgit.lib.ObjectId;
 
-public class Commit {
+public class CommitModel {
 
 	private ObjectId id;
 	private String message;
 	private String author;
 	private Date date;
-	private Map<String, List<ClassModel>> elementsChanged;
-
-	public Commit(ObjectId id, String author, Date date, String message, List<String> elements){
+	private List<ClassModel> classChanged;
+	private List<String> filesChanged;
+	
+	public CommitModel(ObjectId id, String author, Date date, String message, List<String> elements){
 		this.id = id;
 		this.message = message;
 		this.author = author;
 		this.date = date;
-		this.elementsChanged = new HashMap<>();
-		for(String element : elements){
-			elementsChanged.put(element, new ArrayList<>());
-		}
+		
+		this.filesChanged = elements;
+		this.classChanged = new ArrayList<>();
+		
 	}
 
 	public ObjectId getId(){
 		return id;
 	}
-	
-	public Set<String> getFilesChanged(){
-		return elementsChanged.keySet();
+
+	public List<String> getFilesChanged(){
+		return filesChanged;
 	}
 	
-	public List<ClassModel> get(String filename){
-		return elementsChanged.get(filename);
+	public List<ClassModel> getClassChanged(){
+		return classChanged;
 	}
-	
-	
-	public void addClassModel(String fileChanged, ClassModel model){
-		elementsChanged.get(fileChanged).add(model);
+
+	public void addClassModel(ClassModel model){
+		
+		boolean contains = false;
+		for(ClassModel classModel : classChanged){
+			if(classModel.getName().equals(model.getName())){
+				contains = true;
+			}
+		}
+		if(!contains){
+			classChanged.add(model);
+		}
 	}
 
 	@Override

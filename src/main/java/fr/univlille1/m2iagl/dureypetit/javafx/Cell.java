@@ -40,7 +40,6 @@ public class Cell extends Pane {
     }
 
     public void setView(Node view) {
-
         this.view = view;
         getChildren().add(view);
 
@@ -52,5 +51,21 @@ public class Cell extends Pane {
 
     public String getCellId() {
         return cellId;
+    }
+    
+    public boolean isClass(){
+    	return false;
+    }
+    
+    public boolean isMethod(){
+    	return false;
+    }
+    
+    public boolean isParameter(){
+    	return false;
+    }
+    
+    public boolean isText(){
+    	return false;
     }
 }

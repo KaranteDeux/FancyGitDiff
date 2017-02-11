@@ -5,21 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Model {
+public class GraphicModel {
 
     Cell graphParent;
 
     List<Cell> allCells;
     List<Cell> addedCells;
     List<Cell> removedCells;
-
+    
     List<Edge> allEdges;
     List<Edge> addedEdges;
     List<Edge> removedEdges;
+    
+    int nbClasses;
+    int nbMethods;
+    int nbParameters;
 
     Map<String,Cell> cellMap; // <id,cell>
-
-    public Model() {
+    
+    public GraphicModel() {
 
          graphParent = new Cell( "_ROOT_");
 
@@ -38,6 +42,12 @@ public class Model {
         removedEdges = new ArrayList<>();
 
         cellMap = new HashMap<>(); // <id,cell>
+        
+        nbClasses = 0;
+        nbMethods = 0;
+        nbParameters = 0;
+        
+        graphParent.getCellChildren().clear();
 
     }
 
@@ -69,35 +79,58 @@ public class Model {
     public List<Edge> getAllEdges() {
         return allEdges;
     }
-
-    public void addCell(String id, CellType type) {
-
+    
+    public int getNbClasses(){
+    	return nbClasses;
+    }
+    
+    public int getNbMethods(){
+    	return nbMethods;
+    }
+    
+    public int getNbParameters(){
+    	return nbParameters;
+    }
+    
+    public void addCell(String id, CellType type, String text) {
+        ElementCell elementCell = null;
         switch (type) {
 
-        case RECTANGLE:
-            RectangleCell rectangleCell = new RectangleCell(id);
-            addCell(rectangleCell);
+        case CLASS:
+            elementCell = new ClassCell(id, text);
+            nbClasses++;
             break;
 
-        case TRIANGLE:
-            TriangleCell circleCell = new TriangleCell(id);
-            addCell(circleCell);
+        case METHOD:
+            elementCell = new MethodCell(id, text);
+            nbMethods++;
+            break;
+
+        case PARAMETER:
+            elementCell = new ParameterCell(id, text);
+            nbParameters++;
             break;
 
         default:
             throw new UnsupportedOperationException("Unsupported type: " + type);
         }
+        
+        TextCell textCell = new TextCell(elementCell, id + "txt", text);
+        elementCell.setTextCell(textCell);
+        addCell(elementCell);
+        addCell(textCell);
+
     }
 
-    private void addCell( Cell cell) {
+    private void addCell(Cell cell) {
 
         addedCells.add(cell);
-
+        
         cellMap.put( cell.getCellId(), cell);
 
     }
 
-    public void addEdge( String sourceId, String targetId) {
+    public void addEdge(String sourceId, String targetId) {
 
         Cell sourceCell = cellMap.get( sourceId);
         Cell targetCell = cellMap.get( targetId);
@@ -105,7 +138,6 @@ public class Model {
         Edge edge = new Edge( sourceCell, targetCell);
 
         addedEdges.add( edge);
-
     }
 
     /**
@@ -119,6 +151,16 @@ public class Model {
                 graphParent.addCellChild( cell);
             }
         }
+
+    }
+    
+    public void removeEverything(){
+        removedCells.addAll(allCells);
+        removedEdges.addAll(allEdges);
+        
+        nbClasses = 0;
+        nbMethods = 0;
+        nbParameters = 0;
 
     }
 

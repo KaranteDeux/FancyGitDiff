@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 
 public class Graph {
 
-    private Model model;
+    private GraphicModel model;
 
     private Group canvas;
 
@@ -23,7 +23,7 @@ public class Graph {
 
     public Graph() {
 
-        this.model = new Model();
+        this.model = new GraphicModel();
 
         canvas = new Group();
         cellLayer = new CellLayer();
@@ -47,7 +47,7 @@ public class Graph {
         return this.cellLayer;
     }
 
-    public Model getModel() {
+    public GraphicModel getModel() {
         return model;
     }
 
@@ -56,13 +56,14 @@ public class Graph {
 
     public void endUpdate() {
 
+        // remove components from graph pane
+        getCellLayer().getChildren().removeAll(model.getRemovedCells());
+        getCellLayer().getChildren().removeAll(model.getRemovedEdges());
+        
         // add components to graph pane
         getCellLayer().getChildren().addAll(model.getAddedEdges());
         getCellLayer().getChildren().addAll(model.getAddedCells());
 
-        // remove components from graph pane
-        getCellLayer().getChildren().removeAll(model.getRemovedCells());
-        getCellLayer().getChildren().removeAll(model.getRemovedEdges());
 
         // enable dragging of cells
         for (Cell cell : model.getAddedCells()) {
