@@ -9,61 +9,41 @@ public class MousesGestures {
     final DragContext dragContext = new DragContext();
 
     Graph graph;
+    ListCommitView listCommitView;
 
-    public MousesGestures( Graph graph) {
+    public MousesGestures(ListCommitView listCommitView, Graph graph) {
         this.graph = graph;
+        this.listCommitView = listCommitView;
     }
 
     public void makeDraggable( final Node node) {
         node.setOnMouseEntered(onMouseEnteredEventHandler);
+        node.setOnMouseExited(onMouseExitedEventHandler);
     }
-
-    EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
-
-        @Override
-        public void handle(MouseEvent event) {
-
-            Cell cell = (Cell) event.getSource();
-            
-            ElementCell elementCell = null;
-            if(cell.isText()){
-            	TextCell textCell = (TextCell) cell;
-            	elementCell = textCell.getElementCell();
-            } else {
-            	elementCell = (ElementCell) cell;
-            }
-            
-            
-            
-        }
-    };
 
     EventHandler<MouseEvent> onMouseEnteredEventHandler = new EventHandler<MouseEvent>() {
 
         @Override
         public void handle(MouseEvent event) {
-/*
-            Node node = (Node) event.getSource();
-
-            double offsetX = event.getScreenX() + dragContext.x;
-            double offsetY = event.getScreenY() + dragContext.y;
-
-            // adjust the offset in case we are zoomed
-            double scale = graph.getScale();
-
-            offsetX /= scale;
-            offsetY /= scale;
-
-            node.relocate(offsetX, offsetY);
-*/
+            Cell cell = (Cell) event.getSource();
+            
+            ElementCell elementCell = null;
+            if(!cell.isText()){
+            	return;
+            }
+            
+            TextCell textCell = (TextCell) cell;
+        	elementCell = textCell.getElementCell();
+            
+            listCommitView.selectCommitWhichChangedElement(elementCell);
         }
     };
 
-    EventHandler<MouseEvent> onMouseReleasedEventHandler = new EventHandler<MouseEvent>() {
+    EventHandler<MouseEvent> onMouseExitedEventHandler = new EventHandler<MouseEvent>() {
 
         @Override
         public void handle(MouseEvent event) {
-
+        	listCommitView.getSelectionModel().clearSelection();
         }
     };
 

@@ -17,7 +17,7 @@ public class CommitModel {
 	private String message;
 	private String author;
 	private Date date;
-	private List<ClassModel> classChanged;
+	private List<ClassModel> classesChanged;
 	private List<String> filesChanged;
 	
 	public CommitModel(ObjectId id, String author, Date date, String message, List<String> elements){
@@ -27,7 +27,7 @@ public class CommitModel {
 		this.date = date;
 		
 		this.filesChanged = elements;
-		this.classChanged = new ArrayList<>();
+		this.classesChanged = new ArrayList<>();
 		
 	}
 
@@ -40,19 +40,19 @@ public class CommitModel {
 	}
 	
 	public List<ClassModel> getClassChanged(){
-		return classChanged;
+		return classesChanged;
 	}
 
 	public void addClassModel(ClassModel model){
 		
 		boolean contains = false;
-		for(ClassModel classModel : classChanged){
+		for(ClassModel classModel : classesChanged){
 			if(classModel.getName().equals(model.getName())){
 				contains = true;
 			}
 		}
 		if(!contains){
-			classChanged.add(model);
+			classesChanged.add(model);
 		}
 	}
 

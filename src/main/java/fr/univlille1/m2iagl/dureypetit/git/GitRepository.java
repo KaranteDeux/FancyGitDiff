@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.jgit.api.Git;
@@ -15,9 +16,7 @@ import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.DepthWalk.Commit;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -54,6 +53,8 @@ public class GitRepository {
 
 			e.printStackTrace();
 		}
+
+		constructCommitsList();
 	}
 
 	public List<CommitModel> getCommitsList(){
@@ -71,27 +72,38 @@ public class GitRepository {
 			System.exit(1);
 		}
 
-		List<RevCommit> commits = reverseCommitsOrder(revCommits);
-		System.out.println("Size  :" + commits.size());
+		List<RevCommit> revCommitsList = reverseCommitsOrder(revCommits);
 
-		List<CommitModel> commitsModel = new ArrayList<>();
+		commits = new ArrayList<>();
 
 		int i=0;
-		
+
 		ObjectId oldCommitId = null;
-		for (RevCommit revCommit : commits) {
+		for (RevCommit revCommit : revCommitsList) {
 			ObjectId commitId = revCommit.getId();
+
+			String author = revCommit.getAuthorIdent().getName();
+			Date date = revCommit.getAuthorIdent().getWhen();
+			String fullMessage = revCommit.getFullMessage();
+			
+			CommitModel commitModel = null;
 			if(i==0)
-				commitsModel.add(new CommitModel(commitId, revCommit.getAuthorIdent().getName(), revCommit.getAuthorIdent().getWhen(), revCommit.getFullMessage(), readElementsAt(repository, commitId, "")));
+				commitModel = new CommitModel(commitId, author, date, fullMessage, readElementsAt(repository, commitId, ""));
 			else
-				commitsModel.add(new CommitModel(commitId, revCommit.getAuthorIdent().getName(), revCommit.getAuthorIdent().getWhen(), revCommit.getFullMessage(), readElementsChangedAt(repository, commitId, oldCommitId)));
+				commitModel = new CommitModel(commitId, author, date, fullMessage, readElementsChangedAt(repository, commitId, oldCommitId));
+			
+			updateClassModel(commitModel);
+			
+			
+			System.out.println(commitModel.getClassChanged());
+			commits.add(commitModel);
 			i++;
 			oldCommitId = commitId;
 		}
 
 		git.close();
 
-		return commitsModel;
+		return commits;
 	}
 
 	private List<RevCommit> reverseCommitsOrder(Iterable<RevCommit> revCommits){
@@ -103,31 +115,27 @@ public class GitRepository {
 		return commits;
 	}
 
-	public void constructModelForEachCommit(){
-		commits = constructCommitsList();
+	public void updateClassModel(CommitModel commit){
+		for(String fileChanged : commit.getFilesChanged()){
 
-		for(CommitModel commit : commits){
-			for(String fileChanged : commit.getFilesChanged()){
+			try {
+				String contentFile = getContentFile(commit.getId(), fileChanged);
 
-				try {
-					String contentFile = getContentFile(commit.getId(), fileChanged);
-					FileWriter file = new FileWriter("/tmp/tmpFile.java");
+				FileWriter file = new FileWriter("/tmp/tmpFile.java");
 
-					file.write(contentFile);
-					file.close();
+				file.write(contentFile);
+				file.close();
 
-					FileInputStream in = new FileInputStream("/tmp/tmpFile.java");
-					CompilationUnit cu = JavaParser.parse(in);
+				FileInputStream in = new FileInputStream("/tmp/tmpFile.java");
+				CompilationUnit cu = JavaParser.parse(in);
 
-					// prints the resulting compilation unit to default system output
-					new ClassVisitor().visit(cu, null);
-					commit.addClassModel(GitRepository.classModel);
+				// prints the resulting compilation unit to default system output
+				new ClassVisitor().visit(cu, null);
+				commit.addClassModel(GitRepository.classModel);
 
-				} catch(Exception e){
+			} catch(Exception e){
 
-				}
 			}
-
 		}
 	}
 
@@ -178,8 +186,6 @@ public class GitRepository {
 			revWalk.close();
 			treeWalk.close();
 
-			System.out.println("Elements changed : " + elementsChanged);
-
 			return elementsChanged;
 
 		} catch(Exception e){
@@ -197,11 +203,11 @@ public class GitRepository {
 			RevWalk walk = new RevWalk(repository);
 			RevTree tree = walk.parseTree(commitId);
 			RevTree oldTree = walk.parseTree(oldCommitId);
-			
+
 			CanonicalTreeParser oldTreeParser = new CanonicalTreeParser();
 			ObjectReader oldReader = repository.newObjectReader();
 			oldTreeParser.reset(oldReader, tree.getId());
-			
+
 			CanonicalTreeParser newTreeParser = new CanonicalTreeParser();
 			ObjectReader newReader = repository.newObjectReader();
 			newTreeParser.reset(newReader, oldTree.getId());
@@ -214,22 +220,16 @@ public class GitRepository {
 					.setOldTree(oldTreeParser)
 					.call();
 			for (DiffEntry entry : diffs) {
-				elementsChanged.add(entry.getPath(Side.NEW));
-			}
+				String path = entry.getPath(Side.NEW);
+				if(path.equals("/dev/null")){
+					path = entry.getPath(Side.OLD);
+				}
+				elementsChanged.add(path);
+			}			
 
 
 			git.close();
 			return elementsChanged;
-			/*
-			System.out.println("Commit nb : " + commitNb);
-			ObjectId oldHead = repository.resolve("HEAD~" + (commitNb+1) + "^{tree}");
-			ObjectId head = repository.resolve("HEAD~" + commitNb + "^{tree}");
-			CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
-			oldTreeIter.reset(reader, oldHead);
-			CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
-			newTreeIter.reset(reader, head);*/
-
-			// finally get the list of changed files
 
 
 		} catch(Exception e){

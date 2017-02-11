@@ -21,7 +21,7 @@ public class Graph {
      */
     CellLayer cellLayer;
 
-    public Graph() {
+    public Graph(ListCommitView listCommitView) {
 
         this.model = new GraphicModel();
 
@@ -30,7 +30,7 @@ public class Graph {
 
         canvas.getChildren().add(cellLayer);
 
-        mouseGestures = new MousesGestures(this);
+        mouseGestures = new MousesGestures(listCommitView, this);
 
         scrollPane = new ZoomableScrollPane(canvas);
 

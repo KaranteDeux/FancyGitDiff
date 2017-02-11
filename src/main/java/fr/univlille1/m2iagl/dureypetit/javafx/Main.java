@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    Graph graph = new Graph();
+    Graph graph;
     ListCommitView listCommitView;
     
     static GitRepository gitRepo;
@@ -29,12 +29,17 @@ public class Main extends Application {
     	
         BorderPane root = new BorderPane();
 
-        graph = new Graph();
+        
+      
 
         Scene scene = new Scene(root, 1920, 1060);
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         
-        listCommitView = new ListCommitView(gitRepo, graph);
+        listCommitView = new ListCommitView(gitRepo);
+        
+        graph = new Graph(listCommitView);
+        
+        listCommitView.setGraph(graph);
         
         StackPane leftPane = new StackPane(graph.getScrollPane());
         StackPane rightPane = new StackPane(listCommitView);
@@ -63,9 +68,6 @@ public class Main extends Application {
 		ConfigConstants.SHOW_PARAMETERS = Boolean.parseBoolean(p.getProperty("SHOW_PARAMETERS"));
 		gitRepo = new GitRepository(p.getProperty("JAVA_FOLDER"));
 
-		
-		gitRepo.constructModelForEachCommit();
-		
 		
         launch(args);
     }
