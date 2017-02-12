@@ -1,14 +1,14 @@
 # FancyGitDiff
 
-## Informations générales
+## Informations gÃ©nÃ©rales
 
 #### Par Antonin DUREY et Antonin PETIT
-#### 12 Février 2017
+#### 12 FÃ©vrier 2017
 
-## Implémentation
+## ImplÃ©mentation
 
-Notre code est découpé en 4 packages
-1. git : Contient GitRepository, qui fait la liaison avec l'interface de JGit. Les méthodes *readElementsAt* et *readElementsChangedAt* sont utilisés pour récupérer les fichiers modifiés par un commit donné.
-2. javafx : Contient les éléments graphiques devant être affichés et le Main de l'application. Nous avons ici séparé l'arborescence des cellules, les arrêtes, le layout, et les éléments généraux d'interfaces et d'évènements. La hiérarchie des cellules nous permet de traiter indifféremment les *ClassCell*, *MethodCell* ou *ParameterCell*. En Java FX il n'est pas possible d'écrire dans une *View* et nous avonc donc dû définir une view uniquement pour afficher le texte.
-3. model : Contient les différents modèles (ClassModel, MethodModel, etc).
-4. parser : Contient les 2 classes permettant de parser du java grâce au JavaParser. La classe *ClassVisitor* est appelée par gitRepository. *classVisitor* est un héritage de *VoidVisitorAdapter* définit par JavaParser. Cela permet de pouvoir être très spécifique dans les opérations à effectuer lorsqu'une classe ou interface est rencontré par l'analyseur d'arbre syntaxique.
+Notre code est dÃ©coupÃ© en 4 packages
+- git : Contient GitRepository, qui fait la liaison avec l'interface de JGit. Les mÃ©thodes *readElementsAt* et *readElementsChangedAt* sont utilisÃ©s pour rÃ©cupÃ©rer les fichiers modifiÃ©s par un commit donnÃ©.
+- javafx : Contient les Ã©lÃ©ments graphiques devant Ãªtre affichÃ©s et le Main de l'application. Nous avons ici sÃ©parÃ© l'arborescence des cellules, les arrÃªtes, le layout, et les Ã©lÃ©ments gÃ©nÃ©raux d'interfaces et d'Ã©vÃ¨nements. La hiÃ©rarchie des cellules nous permet de traiter indiffÃ©remment les *ClassCell*, *MethodCell* ou *ParameterCell*. En Java FX il n'est pas possible d'Ã©crire dans une *View* et nous avonc donc dÃ» dÃ©finir une view uniquement pour afficher le texte.
+- model : Contient les diffÃ©rents modÃ¨les (ClassModel, MethodModel, etc).
+- parser : Contient les 2 classes permettant de parser du java grÃ¢ce au JavaParser. La classe *ClassVisitor* est appelÃ©e par gitRepository. *classVisitor* est un hÃ©ritage de *VoidVisitorAdapter* dÃ©finit par JavaParser. Cela permet de pouvoir Ãªtre trÃ¨s spÃ©cifique dans les opÃ©rations Ã  effectuer lorsqu'une classe ou interface est rencontrÃ© par l'analyseur d'arbre syntaxique.
