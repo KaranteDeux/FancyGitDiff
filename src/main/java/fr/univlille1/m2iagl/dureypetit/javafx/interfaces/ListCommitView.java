@@ -1,8 +1,13 @@
-package fr.univlille1.m2iagl.dureypetit.javafx;
+package fr.univlille1.m2iagl.dureypetit.javafx.interfaces;
 
 import java.util.List;
 
 import fr.univlille1.m2iagl.dureypetit.git.GitRepository;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.CellType;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.ElementCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.TextCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.layout.Layout;
+import fr.univlille1.m2iagl.dureypetit.javafx.layout.OrderedLayout;
 import fr.univlille1.m2iagl.dureypetit.model.ClassModel;
 import fr.univlille1.m2iagl.dureypetit.model.CommitModel;
 import fr.univlille1.m2iagl.dureypetit.model.ConfigConstants;
@@ -40,17 +45,17 @@ public class ListCommitView extends ListView<CommitModel>{
 
 				for(ClassModel classModel : clickedCommit.getClassChanged()){
 					String className = classModel.getName();
-					model.addCell(className, CellType.CLASS, className);
+					model.addCell(className, CellType.CLASS, className, classModel);
 
 					for(MethodModel methodModel : classModel.getMethods()){
 						String methodName = methodModel.getName();
-						model.addCell(className + ":" + methodName, CellType.METHOD, methodName);
+						model.addCell(className + ":" + methodName, CellType.METHOD, methodName, methodModel);
 						model.addEdge(className, className + ":" + methodName);
 
 						if(ConfigConstants.SHOW_PARAMETERS){
 							for(ParameterModel parameterModel : methodModel.getParameters()){
 								String parameterName = parameterModel.getName();
-								model.addCell(className + ":" + methodName + ":" + parameterName, CellType.PARAMETER, parameterName);
+								model.addCell(className + ":" + methodName + ":" + parameterName, CellType.PARAMETER, parameterName, parameterModel);
 								model.addEdge(className + ":" + methodName, className + ":" + methodName + ":" + parameterName);
 
 							}
@@ -80,20 +85,20 @@ public class ListCommitView extends ListView<CommitModel>{
 			
 			for(ClassModel classModel : commitModel.getClassChanged()){
 				
-				if(classModel.getName().equals(textCell.getText())){
+				if(classModel.equals(element.getElementModel())){
 					selectionModel.select(commitModel);
 				}
 				
 				for(MethodModel methodModel : classModel.getMethods()){
 					
-					if(methodModel.getName().equals(textCell.getText())){
+					if(methodModel.equals(element.getElementModel())){
 						selectionModel.select(commitModel);
 					}
+					
 					for(ParameterModel parameterModel : methodModel.getParameters()){
-						if(parameterModel.getName().equals(textCell.getText())){
+						if(parameterModel.equals(element.getElementModel())){
 							selectionModel.select(commitModel);
 						}
-						
 					}
 				}
 			}

@@ -1,4 +1,4 @@
-package fr.univlille1.m2iagl.dureypetit.javafx;
+package fr.univlille1.m2iagl.dureypetit.javafx.interfaces;
 
 import javafx.event.EventHandler;
 import javafx.scene.Group;

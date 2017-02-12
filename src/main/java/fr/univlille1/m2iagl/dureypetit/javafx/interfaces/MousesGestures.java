@@ -1,5 +1,8 @@
-package fr.univlille1.m2iagl.dureypetit.javafx;
+package fr.univlille1.m2iagl.dureypetit.javafx.interfaces;
 
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.Cell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.ElementCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.TextCell;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;

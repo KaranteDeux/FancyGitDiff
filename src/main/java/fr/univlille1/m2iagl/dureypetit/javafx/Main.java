@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 import fr.univlille1.m2iagl.dureypetit.git.GitRepository;
+import fr.univlille1.m2iagl.dureypetit.javafx.interfaces.Graph;
+import fr.univlille1.m2iagl.dureypetit.javafx.interfaces.ListCommitView;
+import fr.univlille1.m2iagl.dureypetit.javafx.layout.Layout;
+import fr.univlille1.m2iagl.dureypetit.javafx.layout.OrderedLayout;
 import fr.univlille1.m2iagl.dureypetit.model.CommitModel;
 import fr.univlille1.m2iagl.dureypetit.model.ConfigConstants;
 import javafx.application.Application;

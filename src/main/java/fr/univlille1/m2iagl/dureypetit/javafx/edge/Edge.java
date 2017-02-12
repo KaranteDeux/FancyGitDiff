@@ -1,5 +1,6 @@
-package fr.univlille1.m2iagl.dureypetit.javafx;
+package fr.univlille1.m2iagl.dureypetit.javafx.edge;
 
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.Cell;
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
 

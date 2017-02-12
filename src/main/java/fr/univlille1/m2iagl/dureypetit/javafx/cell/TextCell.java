@@ -1,4 +1,4 @@
-package fr.univlille1.m2iagl.dureypetit.javafx;
+package fr.univlille1.m2iagl.dureypetit.javafx.cell;
 
 import javafx.scene.text.Text;
 

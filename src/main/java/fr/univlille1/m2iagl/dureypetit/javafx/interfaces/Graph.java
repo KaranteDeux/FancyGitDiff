@@ -1,5 +1,7 @@
-package fr.univlille1.m2iagl.dureypetit.javafx;
+package fr.univlille1.m2iagl.dureypetit.javafx.interfaces;
 
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.Cell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.CellLayer;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;

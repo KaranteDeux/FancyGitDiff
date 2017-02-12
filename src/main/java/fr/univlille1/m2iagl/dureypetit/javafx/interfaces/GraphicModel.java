@@ -1,9 +1,22 @@
-package fr.univlille1.m2iagl.dureypetit.javafx;
+package fr.univlille1.m2iagl.dureypetit.javafx.interfaces;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.Cell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.CellType;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.ClassCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.ElementCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.MethodCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.ParameterCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.TextCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.edge.Edge;
+import fr.univlille1.m2iagl.dureypetit.model.ClassModel;
+import fr.univlille1.m2iagl.dureypetit.model.ElementModel;
+import fr.univlille1.m2iagl.dureypetit.model.MethodModel;
+import fr.univlille1.m2iagl.dureypetit.model.ParameterModel;
 
 public class GraphicModel {
 
@@ -17,9 +30,9 @@ public class GraphicModel {
     List<Edge> addedEdges;
     List<Edge> removedEdges;
     
-    int nbClasses;
-    int nbMethods;
-    int nbParameters;
+    public int nbClasses;
+    public int nbMethods;
+    public int nbParameters;
 
     Map<String,Cell> cellMap; // <id,cell>
     
@@ -92,22 +105,22 @@ public class GraphicModel {
     	return nbParameters;
     }
     
-    public void addCell(String id, CellType type, String text) {
+    public void addCell(String id, CellType type, String text, ElementModel elementModel) {
         ElementCell elementCell = null;
         switch (type) {
 
         case CLASS:
-            elementCell = new ClassCell(id, text);
+            elementCell = new ClassCell(id, text, (ClassModel) elementModel);
             nbClasses++;
             break;
 
         case METHOD:
-            elementCell = new MethodCell(id, text);
+            elementCell = new MethodCell(id, text, (MethodModel) elementModel);
             nbMethods++;
             break;
 
         case PARAMETER:
-            elementCell = new ParameterCell(id, text);
+            elementCell = new ParameterCell(id, text, (ParameterModel) elementModel);
             nbParameters++;
             break;
 

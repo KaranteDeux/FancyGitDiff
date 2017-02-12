@@ -1,7 +1,12 @@
-package fr.univlille1.m2iagl.dureypetit.javafx;
+package fr.univlille1.m2iagl.dureypetit.javafx.layout;
 
 import java.util.List;
 import java.util.Random;
+
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.Cell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.ElementCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.cell.TextCell;
+import fr.univlille1.m2iagl.dureypetit.javafx.interfaces.Graph;
 
 public class OrderedLayout extends Layout {
 
