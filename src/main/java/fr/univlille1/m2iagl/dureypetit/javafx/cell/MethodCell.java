@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class MethodCell extends ElementCell {
 
-	private static Color STROKE_COLOR = Color.RED;
+	private static final Color STROKE_COLOR = Color.RED;
 
 	public MethodCell( String id, String text, MethodModel methodModel) {
 		super(id, STROKE_COLOR, text, methodModel);

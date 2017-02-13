@@ -14,14 +14,14 @@ public class Graph {
 
     private ZoomableScrollPane scrollPane;
 
-    MousesGestures mouseGestures;
+    private MousesGestures mouseGestures;
 
     /**
      * the pane wrapper is necessary or else the scrollpane would always align
      * the top-most and left-most child to the top and left eg when you drag the
      * top child down, the entire scrollpane would move down
      */
-    CellLayer cellLayer;
+    private CellLayer cellLayer;
 
     public Graph(ListCommitView listCommitView) {
 

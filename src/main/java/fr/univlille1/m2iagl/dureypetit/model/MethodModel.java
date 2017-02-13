@@ -5,17 +5,17 @@ import java.util.List;
 
 public class MethodModel extends AbstractElementModel{
 	
-	String returnType;
+	private String returnType;
 	
-	String name;
+	private String name;
 	
-	String visibility;
+	private String visibility;
 	
-	List<ParameterModel> parametersModel;
+	private List<ParameterModel> parametersModel;
 	
-	String commentText;
+	private String commentText;
 	
-	String commentTextReturn;
+	private String commentTextReturn;
 	
 	public MethodModel(String visibility, String returnType, String name, String commentText){
 		this.visibility = visibility;

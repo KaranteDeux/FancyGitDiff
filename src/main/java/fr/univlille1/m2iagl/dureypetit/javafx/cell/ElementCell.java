@@ -6,9 +6,9 @@ import javafx.scene.shape.Rectangle;
 
 public abstract class ElementCell extends Cell{
 
-	TextCell textCell;
+	private TextCell textCell;
 	
-	ElementModel elementModel;
+	private ElementModel elementModel;
 	
 	public ElementCell(String cellId, Color color, String text, ElementModel elementModel) {
 		super(cellId);

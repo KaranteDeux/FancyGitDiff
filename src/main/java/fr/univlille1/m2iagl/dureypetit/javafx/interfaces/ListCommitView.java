@@ -22,8 +22,8 @@ import javafx.scene.input.MouseEvent;
 
 public class ListCommitView extends ListView<CommitModel>{
 
-	GitRepository gitRepository;
-	Graph graph;
+	private GitRepository gitRepository;
+	private Graph graph;
 
 	public ListCommitView(GitRepository gitRepository){
 		this.gitRepository = gitRepository;

@@ -38,15 +38,15 @@ public class OrderedLayout extends Layout {
 				if(elementCell.isClass()){
 					nbClasses++;
 					y = 100;
-					x = 1200 / graph.getModel().nbClasses * nbClasses;
+					x = 1200 / graph.getModel().getNbClasses() * nbClasses;
 				} else if(elementCell.isMethod()){
 					nbMethods++;
 					y = 400 + 90 / 3 * (nbMethods % 3);
-					x = 1200 / graph.getModel().nbMethods * nbMethods;
+					x = 1200 / graph.getModel().getNbMethods() * nbMethods;
 				} else if(elementCell.isParameter()){
 					nbParameters++;
 					y = 700 + 120 / 4 * (nbParameters % 4);
-					x = 1200 / graph.getModel().nbParameters * nbParameters;
+					x = 1200 / graph.getModel().getNbParameters() * nbParameters;
 				} else {
 					throw new RuntimeException("Unknown cell type");
 				}

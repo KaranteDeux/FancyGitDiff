@@ -35,7 +35,7 @@ public class Main extends Application {
 
         
       
-
+        primaryStage.setTitle("FancyGitDiff");
         Scene scene = new Scene(root, 1920, 1060);
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         

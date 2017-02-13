@@ -2,10 +2,10 @@ package fr.univlille1.m2iagl.dureypetit.model;
 
 public class FieldModel extends AbstractElementModel{
 	
-	String name;
-	String type;
+	private String name;
+	private String type;
 	
-	String commentText;
+	private String commentText;
 	
 	public FieldModel(String name, String type, String commentText){
 		this.name = name;

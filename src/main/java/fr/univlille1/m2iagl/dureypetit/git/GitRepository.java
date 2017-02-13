@@ -94,8 +94,6 @@ public class GitRepository {
 			
 			updateClassModel(commitModel);
 			
-			
-			System.out.println(commitModel.getClassChanged());
 			commits.add(commitModel);
 			i++;
 			oldCommitId = commitId;

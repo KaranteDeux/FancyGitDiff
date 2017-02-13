@@ -9,10 +9,10 @@ import javafx.scene.input.MouseEvent;
 
 public class MousesGestures {
 
-    final DragContext dragContext = new DragContext();
+    final private DragContext dragContext = new DragContext();
 
-    Graph graph;
-    ListCommitView listCommitView;
+    private Graph graph;
+    private ListCommitView listCommitView;
 
     public MousesGestures(ListCommitView listCommitView, Graph graph) {
         this.graph = graph;

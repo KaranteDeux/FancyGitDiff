@@ -20,19 +20,19 @@ import fr.univlille1.m2iagl.dureypetit.model.ParameterModel;
 
 public class GraphicModel {
 
-    Cell graphParent;
+    private Cell graphParent;
 
-    List<Cell> allCells;
-    List<Cell> addedCells;
-    List<Cell> removedCells;
+    private List<Cell> allCells;
+    private List<Cell> addedCells;
+    private List<Cell> removedCells;
     
-    List<Edge> allEdges;
-    List<Edge> addedEdges;
-    List<Edge> removedEdges;
+    private List<Edge> allEdges;
+    private List<Edge> addedEdges;
+    private List<Edge> removedEdges;
     
-    public int nbClasses;
-    public int nbMethods;
-    public int nbParameters;
+    private int nbClasses;
+    private int nbMethods;
+    private int nbParameters;
 
     Map<String,Cell> cellMap; // <id,cell>
     

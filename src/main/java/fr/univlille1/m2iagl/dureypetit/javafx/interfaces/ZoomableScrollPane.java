@@ -8,11 +8,11 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.transform.Scale;
 
 public class ZoomableScrollPane extends ScrollPane {
-    Group zoomGroup;
-    Scale scaleTransform;
-    Node content;
-    double scaleValue = 1.0;
-    double delta = 0.1;
+    private Group zoomGroup;
+    private Scale scaleTransform;
+    private Node content;
+    private double scaleValue = 1.0;
+    private double delta = 0.1;
 
     public ZoomableScrollPane(Node content) {
         this.content = content;

@@ -4,8 +4,8 @@ import javafx.scene.text.Text;
 
 public class TextCell extends Cell {
 
-	ElementCell associated;
-	String text;
+	private ElementCell associated;
+	private String text;
 	
 	
 	public TextCell(ElementCell associated, String id, String text) {
